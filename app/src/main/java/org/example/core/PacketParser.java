@@ -83,6 +83,16 @@ public class PacketParser {
         parsed.srcIp = ipToString(data, offset + 12);
         parsed.destIp = ipToString(data, offset + 16);
 
+        parsed.srcIpInt = ((data[offset + 12] & 0xff)) |
+                          ((data[offset + 13] & 0xff) << 8) |
+                          ((data[offset + 14] & 0xff) << 16) |
+                          ((data[offset + 15] & 0xff) << 24);
+
+        parsed.destIpInt = ((data[offset + 16] & 0xff)) |
+                           ((data[offset + 17] & 0xff) << 8) |
+                           ((data[offset + 18] & 0xff) << 16) |
+                           ((data[offset + 19] & 0xff) << 24);
+
         parsed.hasIp = true;
 
         return headerLen;

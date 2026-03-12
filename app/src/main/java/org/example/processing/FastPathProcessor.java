@@ -84,6 +84,10 @@ public class FastPathProcessor implements Runnable {
         return connTracker;
     }
 
+    public long getPacketsProcessed() {
+        return packetsProcessed.get();
+    }
+
     @Override
     public void run() {
 

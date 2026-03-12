@@ -59,6 +59,10 @@ public class LBManager {
         return lbs.get(lbIndex);
     }
 
+    public List<LoadBalancer> getLBs() {
+        return lbs;
+    }
+
     public AggregatedStats getAggregatedStats() {
 
         AggregatedStats stats = new AggregatedStats();

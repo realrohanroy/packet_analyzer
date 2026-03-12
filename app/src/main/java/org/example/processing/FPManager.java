@@ -57,4 +57,8 @@ public class FPManager {
         return q;
     }
 
+    public String generateClassificationReport() {
+        return "\nClassification Report Generation missing in Java Port";
+    }
+
 }

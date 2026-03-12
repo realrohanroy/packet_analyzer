@@ -1,0 +1,37 @@
+﻿Calculating task graph as no cached configuration is available for tasks: run --args=../Packet_analyzer-main/test_dpi.pcap ../Packet_analyzer-main/java_output.pcap
+> Task :app:processResources NO-SOURCE
+> Task :app:compileJava UP-TO-DATE
+> Task :app:classes UP-TO-DATE
+
+> Task :app:run FAILED
+./gradlew.bat : Error: Could not find or load main class 
+org.example.App
+At line:1 char:1
++ ./gradlew.bat run 
+--args="../Packet_analyzer-main/test_dpi.pcap ../Pa ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: Could no... 
+   org.example.App:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Caused by: java.lang.ClassNotFoundException: org.example.App
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:run'.
+> Process 'command 'C:\Program 
+Files\Java\jdk-17.0.12\bin\java.exe'' finished with non-zero 
+exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan 
+(powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
+2 actionable tasks: 1 executed, 1 up-to-date
+Configuration cache entry stored.

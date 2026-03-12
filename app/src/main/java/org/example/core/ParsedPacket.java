@@ -15,6 +15,8 @@ public class ParsedPacket {
     public int ipVersion;
     public String srcIp;
     public String destIp;
+    public int srcIpInt;
+    public int destIpInt;
     public int protocol;
     public int ttl;
 

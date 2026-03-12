@@ -1,8 +1,35 @@
 # Ignore Gradle project-specific cache directory
 .gradle
+.gradletasknamecache
 
 # Ignore Gradle build output directory
-build
+build/
+app/build/
 
 # Ignore Kotlin plugin data
 .kotlin
+
+# Ignore compiled class files
+*.class
+
+# Ignore packaged binaries
+*.jar
+*.war
+*.ear
+dpi-engine.jar
+
+# Ignore IDE specific files
+.idea/
+*.iml
+*.iws
+
+# Ignore Logs and Test outputs
+*.log
+*log.txt
+build_out*.txt
+final_log.txt
+final_run_log.txt
+
+# Ignore PCAP generated output files
+*.pcap
+!testdpi.pcap

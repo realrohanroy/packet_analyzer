@@ -56,6 +56,16 @@ public class Types {
             return result;
         }
 
+        public long getHash() {
+            long h = 0;
+            h ^= (srcIp & 0xFFFFFFFFL) + 0x9e3779b9L + (h << 6) + (h >>> 2);
+            h ^= (dstIp & 0xFFFFFFFFL) + 0x9e3779b9L + (h << 6) + (h >>> 2);
+            h ^= (srcPort & 0xFFFFL) + 0x9e3779b9L + (h << 6) + (h >>> 2);
+            h ^= (dstPort & 0xFFFFL) + 0x9e3779b9L + (h << 6) + (h >>> 2);
+            h ^= (protocol & 0xFFL) + 0x9e3779b9L + (h << 6) + (h >>> 2);
+            return h;
+        }
+
         @Override
         public String toString() {
             return srcIp + ":" + srcPort +
@@ -94,6 +104,33 @@ public class Types {
         DISCORD,
         GITHUB,
         CLOUDFLARE
+    }
+
+    public static AppType sniToAppType(String sni) {
+        if (sni == null || sni.isEmpty()) return AppType.UNKNOWN;
+        
+        String lower = sni.toLowerCase();
+        
+        if (lower.contains("google") || lower.contains("gstatic") || 
+            lower.contains("googleapis") || lower.contains("ggpht") || lower.contains("gvt1")) return AppType.GOOGLE;
+        if (lower.contains("youtube") || lower.contains("ytimg") || lower.contains("youtu.be")) return AppType.YOUTUBE;
+        if (lower.contains("facebook") || lower.contains("fbcdn") || lower.contains("fb.com")) return AppType.FACEBOOK;
+        if (lower.contains("instagram") || lower.contains("cdninstagram")) return AppType.INSTAGRAM;
+        if (lower.contains("whatsapp") || lower.contains("wa.me")) return AppType.WHATSAPP;
+        if (lower.contains("twitter") || lower.contains("twimg") || lower.contains("x.com")) return AppType.TWITTER;
+        if (lower.contains("netflix") || lower.contains("nflxvideo")) return AppType.NETFLIX;
+        if (lower.contains("amazon") || lower.contains("aws") || lower.contains("cloudfront")) return AppType.AMAZON;
+        if (lower.contains("microsoft") || lower.contains("azure") || lower.contains("live.com")) return AppType.MICROSOFT;
+        if (lower.contains("apple") || lower.contains("icloud")) return AppType.APPLE;
+        if (lower.contains("telegram") || lower.contains("t.me")) return AppType.TELEGRAM;
+        if (lower.contains("tiktok") || lower.contains("bytedance")) return AppType.TIKTOK;
+        if (lower.contains("spotify") || lower.contains("scdn.co")) return AppType.SPOTIFY;
+        if (lower.contains("zoom")) return AppType.ZOOM;
+        if (lower.contains("discord")) return AppType.DISCORD;
+        if (lower.contains("github")) return AppType.GITHUB;
+        if (lower.contains("cloudflare") || lower.contains("cf-")) return AppType.CLOUDFLARE;
+        
+        return AppType.HTTPS;
     }
 
     // ============================================================
@@ -168,11 +205,12 @@ public class Types {
         public int transportOffset = 0;
         public int payloadOffset = 0;
         public int payloadLength = 0;
+        public byte[] payloadData;
 
         public int tcpFlags = 0;
 
-        public int tsSec;
-        public int tsUsec;
+        public long tsSec;
+        public long tsUsec;
     }
 
     // ============================================================

@@ -80,35 +80,36 @@ public class LoadBalancer implements Runnable {
 
         while (running.get()) {
 
-            Optional<PacketJob> jobOpt =
-                    inputQueue.popWithTimeout(100);
+            try {
+                Optional<PacketJob> jobOpt = inputQueue.popWithTimeout(100);
 
-            if (!jobOpt.isPresent())
-                continue;
+                if (!jobOpt.isPresent())
+                    continue;
 
-            PacketJob job = jobOpt.get();
+                PacketJob job = jobOpt.get();
 
-            packetsReceived.incrementAndGet();
+                packetsReceived.incrementAndGet();
 
-            int fpIndex = selectFP(job.tuple);
+                int fpIndex = selectFP(job.tuple);
 
-            fpQueues.get(fpIndex).push(job);
+                fpQueues.get(fpIndex).push(job);
 
-            packetsDispatched.incrementAndGet();
+                packetsDispatched.incrementAndGet();
 
-            perFpCounts.set(fpIndex,
-                    perFpCounts.get(fpIndex) + 1);
+                perFpCounts.set(fpIndex,
+                        perFpCounts.get(fpIndex) + 1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
         }
     }
 
     private int selectFP(FiveTuple tuple) {
 
-        int hash = tuple.hashCode();
+        long hash = tuple.getHash();
 
-        if (hash < 0)
-            hash = -hash;
-
-        return hash % numFps;
+        return (int) Long.remainderUnsigned(hash, numFps);
     }
 
     public LBStats getStats() {
